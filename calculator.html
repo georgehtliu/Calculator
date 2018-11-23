@@ -1,0 +1,182 @@
+<html>
+
+<head>
+    <title>George and Michael's Calculator</title>
+
+    <style>
+        #view {
+            width: 325px;
+            height: 50px;
+            margin: 100px, 50px;
+            padding: 20px 20px 9px;
+            background: #f442e8;
+            border-radius: 3px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: bold;
+            font-size: 23px;
+            color: white;
+        }
+
+        #calc {
+            border: 4px solid #8942f4;
+            width: 330px;
+            height: 550px;
+            margin: auto;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #27dd73;
+            letter-spacing: 10px;
+        }
+
+        button {
+            width: 40px;
+            height: 40px;
+            margin: 12px 0;
+            background-color: #f44183;
+            color: white;
+            align: center;
+            font-size: 14px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: bold;
+            border-radius: 40%;
+        }
+
+        html {
+            height: 100%;
+            background: radial-gradient(circle, #fff 20%, #8942f4);
+            background-size: cover;
+        }
+    </style>
+
+    <script>
+        var result = null;
+
+        function addNum(num) {
+            if (result !== null) {
+                document.getElementById("view").value = "";
+                result = null;
+            }
+            document.getElementById("view").value += num;
+        }
+
+        function setSign(sign) {
+            result = null;
+            document.getElementById("view").value += sign;
+        }
+
+        function equalPressed() {
+            var value = document.getElementById("view").value;
+            document.getElementById("view").value = eval(value);
+            result = value;
+        }
+
+        function doSign(sign) {
+          //function to do calculation straight away
+            if (sign === "CE") {
+                document.getElementById("view").value = "";
+                return;
+            }
+
+            var value = document.getElementById("view").value;
+            if (isNaN(value)) {
+                return;
+            }
+            switch (sign) {
+                case "sqrt":
+                    document.getElementById("view").value = Number(Math.sqrt(value));
+                    break;
+                case "sin": //input is in radians
+                    document.getElementById("view").value = parseFloat(Number(Math.sin(value) * 100 / 100).toFixed(2));
+                    break;
+                case "cos":
+                    document.getElementById("view").value = parseFloat(Number(Math.cos(value) * 100 / 100).toFixed(2));
+                    break;
+                case "tan":
+                    document.getElementById("view").value = parseFloat(Number(Math.tan(value) * 100 / 100).toFixed(2));
+                    break;
+                case "asin":
+                    document.getElementById("view").value = parseFloat(Number(Math.asin(value) * 100 / 100).toFixed(2));
+                    break;
+                case "acos":
+                    document.getElementById("view").value = parseFloat(Number(Math.acos(value) * 100 / 100).toFixed(2));
+                    break;
+                case "atan":
+                    document.getElementById("view").value = parseFloat(Number(Math.atan(value) * 100 / 100).toFixed(2));
+                    break;
+                case "x<sup>2</sup>":
+                    document.getElementById("view").value = Number(value) * Number(value);
+                    break;
+                case "neg":
+                    document.getElementById("view").value = Number(value) - 2 * Number(value);
+                    break;
+                case "percnt":
+                    document.getElementById("view").value = Number(value) * 100;
+                    break;
+                default:
+                    alert("unsupported operator: " + sign);
+            }
+
+            result = document.getElementById("view").value;
+
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <form id="calc" />
+        <input type="text" id="view" />
+        <div>
+            <button type="button" onclick="doSign('CE')" id="bOperation">CE</button>
+            <button type="button" onclick="doSign('neg')" id="bOperation">( - )</button>
+            <button type="button" onclick="doSign('sin')" id="bOperation">sin</button>
+            <button type="button" onclick="doSign('cos')" id="bOperation">cos</button>
+            <button type="button" onclick="doSign('tan')" id="bOperation">tan</button>
+        </div>
+        <br>
+        <div>
+            <button type="button" onclick="addNum(7)" id="bNum">7</button>
+            <button type="button" onclick="addNum(8)" id="bNum">8</button>
+            <button type="button" onclick="addNum(9)" id="bNum">9</button>
+            <button type="button" onclick="setSign('+')" id="bOperation">+</button>
+            <button type="button" onclick="doSign('asin')" id="bOperation">sin<sup>-1</sup></button>
+        </div>
+        <br>
+        <div>
+            <button type="button" onclick="addNum(4)" id="bNum">4</button>
+            <button type="button" onclick="addNum(5)" id="bNum">5</button>
+            <button type="button" onclick="addNum(6)" id="bNum">6</button>
+            <button type="button" onclick="setSign('-')" id="bOperation">-</button>
+            <button type="button" onclick="doSign('acos')" id="bOperation">cos<sup>-1</sup></button>
+        </div>
+        <br>
+        <div>
+            <button type="button" onclick="addNum(1)" id="bNum">1</button>
+            <button type="button" onclick="addNum(2)" id="bNum">2</button>
+            <button type="button" onclick="addNum(3)" id="bNum">3</button>
+            <button type="button" onclick="setSign('*')" id="bOperation">	&#215;</button>
+            <button type="button" onclick="doSign('atan')" id="bOperation">tan<sup>-1</sup></button>
+        </div>
+        <br>
+        <div>
+            <button type="button" onclick="addNum(0)" id="bNum">0</button>
+            <button type="button" onclick="addNum('.')" id="bNum">.</button>
+            <button type="button" onclick="doSign('sqrt')" id="bOperation">&radic;</button>
+            <button type="button" onclick="setSign('/')" id="bOperation">/</button>
+            <button type="button" onclick="doSign('percnt')" id="bOperation">&percnt;</button>
+        </div>
+        <br>
+        <div>
+            <button type="button" onclick="equalPressed()" id="bEqual">=</button>
+            <button type="button" onclick="addNum(Math.PI)" "id=bOperation">&#960;</button>
+            <button type="button" onclick="doSign('x<sup>2</sup>')" id="bOperation">x<sup>2</sup></button>
+            <button type="button" onclick="addNum('(')" id="bNum">(</button>
+            <button type="button" onclick="addNum(')')" id="bNum">)</button>
+        </div>
+        </div>
+        </div>
+        </form>
+    </center>
+</body>
+
+</html>
