@@ -1,2 +1,2 @@
 # Calculator
-mini calculator with basic functions
+mini calculator with basic functions, built with HTML, CSS and JavaScript
